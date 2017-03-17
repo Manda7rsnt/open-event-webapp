@@ -381,27 +381,27 @@ exports.createDistDir = function(req, socket, callback) {
       });
       archive.pipe(output);
       archive.directory(distHelper.distPath + '/' + appFolder, '/').finalize();
-    },
-    (done) => {
-      logger.addLog('Info', 'Sending mail to the user', socket);
-      console.log('=================================SENDING MAIL\n');
-      if (emit) socket.emit('live.process', {donePercent: 95, status: "Website is being generated" });
+    }//,
+    // (done) => {
+    //   logger.addLog('Info', 'Sending mail to the user', socket);
+    //   console.log('=================================SENDING MAIL\n');
+    //   if (emit) socket.emit('live.process', {donePercent: 95, status: "Website is being generated" });
 
-      if (req.body.ftpdetails) {
-        setTimeout(() => {
-          ftpDeployer.deploy(req.body.ftpdetails, appFolder, () => {
-            //Send call back to orga server
-          })
-        }, 30000);
-      }
+    //   if (req.body.ftpdetails) {
+    //     setTimeout(() => {
+    //       ftpDeployer.deploy(req.body.ftpdetails, appFolder, () => {
+    //         //Send call back to orga server
+    //       })
+    //     }, 30000);
+    //   }
 
-      mailer.uploadAndsendMail(req.body.email, eventName, socket, (url) => {
-        logger.addLog('Success', 'Mail sent succesfully', socket);
-        callback(appFolder, url);
-        done(null, 'write');
-      });
+    //   mailer.uploadAndsendMail(req.body.email, eventName, socket, (url) => {
+    //     logger.addLog('Success', 'Mail sent succesfully', socket);
+    //     callback(appFolder, url);
+    //     done(null, 'write');
+    //   });
 
-    }
+    // }
   ]);
 };
 
